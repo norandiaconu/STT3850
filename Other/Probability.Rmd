@@ -1,0 +1,10 @@
+Probability
+========================================================
+
+```{r}
+#experiment: any action or process that generates observations
+#sample space: the set of all of the possible outcomes of an experiment
+# for Contingency Tables on git: 965*(437/965)*(273/965)
+#fundamental question of inference: ...if the null hypothesis were true
+#for permutation test: fail to reject null hypothesis
+```

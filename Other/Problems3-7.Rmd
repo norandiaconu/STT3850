@@ -1,0 +1,74 @@
+Title
+========================================================
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring web pages (click the **Help** toolbar button for more details on using R Markdown).
+
+When you click the **Knit HTML** button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+library(ggplot2)
+#3A
+site <- "http://www1.appstate.edu/~arnholta/Data/FlightDelays.csv"
+FD <- read.csv(site)
+summary(FD)
+str(FD)
+head(FD)
+DelayTime <- subset(FD,select=Delay,drop=T)
+MEANS <- tapply(FD$Delay,FD$Carrier,mean)
+obsDiff <- MEANS[1] - MEANS[2]
+names(obsDiff) <- NULL
+obsDiff
+
+DAA <- subset(FD,select=Delay,subset=Carrier=="AA",drop=T)
+DUA <- subset(FD,select=Delay,subset=Carrier=="UA",drop=T)
+DA <- c(DAA,DUA)
+m <- length(DAA)
+n <- length(DUA)
+c(m+n,m,n)
+N <- 10^4-1
+DIFF <- numeric(N)
+set.seed(13)
+for(i in 1:N){
+  index <- sample(m+n,m,replace=F)
+  DIFF[i] <- mean(DA[index]) - mean(DA[-index])
+}
+pvalue <- ((sum(DIFF <= obsDiff) + 1) / (N+1)) * 2
+pvalue
+
+table(FD$Carrier)
+T1 <- xtabs(~Carrier,data=FD)
+m1 <- T1[1] #2906
+n1 <- T1[2] #1123
+N1 <- 10^4-1
+diffs <- numeric(N)
+for(i in 1:N1){
+  index <- sample(m1+n1,m1,replace=F)
+  diffs[i] <- mean(DelayTime[index]) - mean(DelayTime[-index])
+}
+hist(diffs)
+ggplot(data=data.frame(x=diffs),aes(x=x)) + geom_density(fill="black") + theme_bw() + geom_vline(xintercept=obsDiff, lty="dashed")
+pvalue <- ((sum(diffs<=obsDiff) + 1)/(N+1))*2
+
+#3B
+MEANS2 <- tapply(FD$Delay,FD$Month,mean)
+obsDiff2 <- MEANS2[1] - MEANS2[2]
+obsDiff2
+table(FD$Month)
+T2 <- xtabs(~Month,data=FD)
+m2 <- T2[1]
+n2 <- T2[2]
+N2 <- 10^4-1
+diffs2 <- numeric(N1)
+for(i in 1:N2){
+  index2 <- sample(m2+n2,m2,replace=F)
+  diffs2[i] <- mean(DelayTime[index2]) - mean(DelayTime[-index2])
+}
+
+#5
+for(i in 1:N){
+  meanUADelay <- tapply(FD$Delay,data$Carrier,mean)
+  sumUADelay <- tapply(FD$Delay,data$Carrier,sum)
+  
+}
+meanUADelay <- MEANS[2]
+```

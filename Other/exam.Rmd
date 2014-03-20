@@ -1,0 +1,24 @@
+Title
+========================================================
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring web pages (click the **Help** toolbar button for more details on using R Markdown).
+
+When you click the **Knit HTML** button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+site <- "http://www1.appstate.edu/~arnholta/Data/FlightDelays.csv"
+FD <- read.csv(site)
+FD[1:4,1:9]
+DAA <- subset(FD,select=Delay,subset=Carrier=="AA",drop=T)
+DUA <- subset(FD,select=Delay,subset=Carrier=="UA",drop=T)
+DA <- c(DAA,DUA)
+m <- length(DAA)
+N <- 10^4-1
+sum <- 0
+for(i in 1:N){
+  if(DA$DelayTime > 28){
+    sum <- sum + 1
+  }
+}
+
+```

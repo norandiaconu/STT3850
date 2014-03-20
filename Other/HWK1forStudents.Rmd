@@ -1,0 +1,231 @@
+# Homework Number 1
+## Names: Noran Diaconu, FirstName1 LastName2
+
+```{r Systime, echo = FALSE, comment = NA}
+DT <- format(Sys.time(), "%A, %B %d, %Y - %X")
+```
+
+This work was last compiled on `r DT`.
+
+```{r label = setup, echo = FALSE, message = FALSE}
+options(width = 120)
+opts_chunk$set(comment = NA, fig.height = 5, fig.width =5, fig.align = 'center')
+library(ggplot2)
+library(lattice)
+```
+
+**Prob 1:** Access the data from URL 
+[http://www.stat.berkeley.edu/users/statlabs/data/babies.data](http://www.stat.berkeley.edu/users/statlabs/data/babies.data),
+and store the information in an object named `BABIES` using the function 
+`read.table()`. A description of the variables can be found at
+[http://www.stat.berkeley.edu/users/statlabs/labs.html](http://www.stat.berkeley.edu/users/statlabs/labs.html).  These data are a subset from a much larger study dealing with 
+child health and development.  Use the functions `summary()` and `dim()` on `BABIES`, and report the number of rows and columns of `BABIES`.
+
+```{r prob1}
+#
+BABIES<-read.table("http://www.stat.berkeley.edu/users/statlabs/data/babies.data",header=TRUE)
+summary(BABIES)
+dim(BABIES)
+```
+
+> **Prob 1 answer:** There are **`r dim(BABIES)[1]`** rows and **`r dim(BABIES)[2]`** columns in the data frame `BABIES`.
+
+**Prob 2:** The variables `bwt`, `gestation`, `parity`, `age`, `height`, `weight`, and `smoke` use values of 999, 999, 9, 99, 99, 999, and 9, respectively, to denote ''unknown.''  `R` uses `NA` to denote a missing or unavailable value.  Re-code the missing values in `BABIES`.  Hint: use something similar to `BABIES$bwt[BABIES$bwt == 999] = NA`.  Run the functions `summary()` and `dim()` on your `BABIES` data frame.
+
+```{r prob2}
+BABIES$bwt[BABIES$bwt == 999] = NA
+BABIES$gestation[BABIES$gestation == 999] = NA
+BABIES$parity[BABIES$parity == 9] = NA
+BABIES$age[BABIES$age == 99] = NA
+BABIES$height[BABIES$height == 99] = NA
+BABIES$weight[BABIES$weight == 999] = NA
+BABIES$smoke[BABIES$smoke == 9] = NA
+summary(BABIES)
+dim(BABIES)
+```
+
+**Prob 3:** Use the function `na.omit()` to create a ''clean'' data set that removes subjects if any observations on the subject are ''unknown.''   Store the modified data frame in a data frame named `CLEAN`.  Run the function `dim()` on the data frame `CLEAN`.  
+
+
+```{r prob3}
+CLEAN<-na.omit(BABIES)
+dim(CLEAN)
+```
+
+**Prob 4:** How many missing values in the data frame `BABIES` are there for `gestation`, `age`, `height`, `weight`, and `smoke`, respectively?  How many rows of `BABIES` have no missing values, one missing value, two missing values, and three missing values, respectively?  Note: the number of rows in `CLEAN` should agree with your answer for the number of rows in `BABIES` that have no missing values.
+
+```{r prob4}
+sum(is.na(BABIES$gestation))
+sum(is.na(BABIES$age))
+sum(is.na(BABIES$height))
+sum(is.na(BABIES$weight))
+sum(is.na(BABIES$smoke))
+table(apply(is.na(BABIES),1,sum))
+```
+
+> **Prob 4 answer:** 
+`r table(apply(is.na(BABIES),1,sum))`
+
+**Prob 5:** Sort the values in `CLEAN` by `bwt`, `gestation`, and `age`.  Store the sorted values in a data frame named `BGA` and show the last six rows of `BGA`.
+
+```{r prob5}
+BGA<-CLEAN[order(CLEAN$bwt,CLEAN$gestation,CLEAN$age),]
+tail(BGA)
+#
+```
+
+**Prob 6:** Store the data frame `CLEAN` in your working directory as a `*.csv` file using the function `write.csv()` using the argument `row.names = FALSE`.
+Use the function `read.csv()` to read the file back in to your working directory and store
+the result in `NAELC`.  Show the first six rows of the data frame `NAELC`.  
+
+```{r prob6}
+write.csv(CLEAN,"CLEAN.csv",row.names=FALSE)
+NAELC<-read.csv("CLEAN.csv")
+head(NAELC)
+#
+```
+
+**Prob 7:** What percent of the women in `CLEAN` are pregnant with their first child (`parity = 0`) and do not smoke?
+
+```{r prob7}
+#prop.table(CLEAN$parity)
+(CLEAN$parity=0)
+#
+```
+
+> **Prob 7 answer:** 
+
+**Prob 8:** Use the information in `CLEAN` to create a density histogram of the birth weights of babies whose mothers have never smoked (`smoke = 0`) and another histogram placed directly below the first in the same graphics device for the birth weights of babies whose mothers currently smoke (`smoke = 1`).  Make the range of the $x$-axis 50 to 180 (ounces) for both histograms.  Superimpose a density curve over each histogram, and label the $x$-axis "Weight in Ounces".  *Extra credit if you create the requested graph with the three graphic systems (base, lattice, and ggplot2).*
+
+```{r prob8a}
+#
+```
+
+```{r prob8b}
+#
+```
+
+
+```{r, prob8c}
+#
+```
+
+**Prob 9:** Based on the histograms, characterize the distribution of baby birth weight for both non-smoking and smoking mothers.
+
+```{r prob9}
+#
+```
+
+> **Prob 9 answer:** 
+
+**Prob 10:** Create side-by-side boxplots to compare the birth weights of babies whose mother's never smoked and those who currently smoke.  Use base graphs (`boxplot()`), lattice graphs (`bwplot()`), and ggplot2 graphs to create the boxplots.  Label the $y$-axis "Weight in Ounces".
+
+```{r prob10a}
+#
+```
+
+```{r prob10b}
+#
+```
+
+```{r prob10c}
+#
+```
+
+**Prob 11:** What is the median weight difference between babies who are firstborn
+(`parity = 0`) and those who are not (`parity = 1`)?
+
+```{r prob11}
+#
+```
+
+> **Prob 11 answer:** 
+
+**Prob 12:** Create a single graph of the densities for pre-pregnancy `weight` for mothers who have never smoked and for mothers who currently smoke.  Make sure both densities appear in the same graph and have a legend.  Label the $x$-axis "Weight in Pounds".  *Extra credit if you create the requested graph using base, lattice, and ggplot2 graphics.*
+
+```{r prob12a}
+#
+```
+
+```{r prob12b}
+#
+```
+
+```{r prob12c}
+#
+```
+
+**Prob 13:** Characterize the pre-pregnancy distribution of `weight` for mothers who have never smoked and for mothers who currently smoke.
+
+```{r prob13}
+#
+```
+
+> **Prob 13 answer:** 
+
+**Prob 14:** What is the mean pre-pregnancy weight difference between mothers who do not smoke and those who do?  Can you think of any reasons not to use the mean as a measure of center to compare pre-pregnancy weights in this problem?
+
+```{r prob14}
+#
+```
+
+> **Prob 14 answer:** 
+
+
+**Prob15:** Compute the body mass index (`BMI`) for each mother in `CLEAN`.  Recall that `BMI` is defined as $\text{kg}/\text{m}^2$ (0.0254 m = 1 in., and 0.45359 kg = 1 lb.).  Add the variables weight in kg, height in m, and BMI to `CLEAN` and store the result in `CLEANP`.  Show the first six rows of `CLEANP`.
+
+```{r prob15}
+#
+```
+
+**Prob 16:** Characterize the distribution of BMI.  Create either a histogram or density plot to
+help determine the shape of the BMI distribution.  Label the $x$-axis "BMI ($kg/m^2$)".
+
+```{r prob16}
+#
+```
+
+> **Prob 16 answer:** 
+
+**Prob 17:** Group pregnant mothers according to their BMI quartile. Find the mean and standard deviation for baby birth weights in each quartile for mothers who have never smoked and those who currently smoke.   Find the median and IQR for baby birth weights in each quartile for mothers who have never smoked and those who currently smoke. Based on your answers, would you characterize birth weight in each group as relatively symmetric or skewed? Create histograms and densities of `bwt` conditioned on `BMI` quartiles and whether the mother smokes to verify your previous assertions about the shape.
+
+```{r prob17a}
+#
+```
+
+```{r prob17b}
+#
+```
+
+```{r prob17c}
+#
+```
+
+> **Prob 17 answer:**  
+
+**Prob 18:** Create side-by-side boxplots of `bwt` based on whether the mother
+smokes conditioned on `BMI` quartiles.  What do you notice using the boxplots?
+
+```{r prob18}
+#
+```
+
+> **Prob 18 answer:** 
+
+
+**Prob 19:** Does it appear that BMI is related to the birth weight of a baby? Create a scatterplot of birth weight (`bwt`) versus `BMI` while conditioning on BMI quartiles and whether the mother smokes to help answer the question.  Use `log(bwt)` on the $y$-axis instead of the untransformed `bwt`.
+
+```{r prob19, fig.width = 8, tidy = FALSE}
+#
+```
+
+> **Prob 19 answer:** 
+
+
+**Prob 20:** Create a scatterplot of `bwt` versus `gestation` conditioned on BMI quartiles and whether the mother smokes using `ggplot2` graphics.  Fit curves to the data using `loess` and `lm` (`stat_smooth()`); and display the fitted curves in the scatterplots. What do you find interesting about the resulting graphs? 
+
+```{r prob20, fig.width = 8}
+#
+```
+
+> **Prob 20 answer:**  

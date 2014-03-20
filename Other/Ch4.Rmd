@@ -1,0 +1,56 @@
+Title
+========================================================
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring web pages (click the **Help** toolbar button for more details on using R Markdown).
+
+When you click the **Knit HTML** button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+```
+How does the . if the null hypothesis is true
+Shape, center, spread
+3E: -0.4052
+
+INT = integral
+SIG = sigma
+
+(EX)
+E[X] = M(sub x) w/ arrows to discrete and continuous
+discrete: SIG x*P(X=x)
+continous: INT from -INF to INF x*f(x) dx
+
+Suppose we have a random variable X, where X = # of heads from flipping a fair coin 3 times
+SIG = {HHH, HHT, HTH, THH, TTH, THT, HTT, TTT}
+P{H and H and H} = P(H) * P(H) * P(H)
+X       0     1     2     3
+P(X=x)  1/8   3/8   3/8   1/8
+
+E[X] = 0*(1/8) + 1*(3/8) + 2*(3/8) + 3*(1/8) = 0 + (3+6+3)/8 = 12/8 = 3/2 = 1.5
+
+(EX)
+V[X] = E[X^2] - E[X]^2 ### E[X^2] != E[X]^2
+E[X^2] = INT from -INF to INF of x^2 * f(x) dx = SIG x^2 * P(X=x)
+V[X] = O^2(sub x) = O^2 w/ arrows to discrete and continuous
+  = [0 - 3/2]^2 * 1/8 + [1 - 3/2]^2 * 3/8 + [2 - 3/2]^2 * 3/8 + [3 - 3/2]^2 * 1/8
+  = 9/32 + 3/32 + 3/32 + 9/32 = 24/32 = 3/4
+  discrete: SIG from i=1 (x - Mu(sub x))^2 * P(X=x) ### Mu(sub x) = E[X]
+  continuous: INT from -INF to INF
+  
+(EX)
+Let X = time Reid waits for the 9:00am AppalCart
+X~Unif[0,20]
+f(x) = 1/20; 0<=x<=20
+INT from 0 to 20 of 1/20 dx = x/20 |0to20 = 20/20 - 0/20 = 1 - 0 = 1
+E[X] = INT from 0to20 of x * 1/20 dx = INT from 0to20 x/20 dx = x^2/40 |0to20 = 20^2/40 - 0/40 = 10
+O^2(sub x) = INT from -INF to INF of (x - Mu(sub x))^2 * f(x) dx = INT from 0to20 of (x - 10)^2 * 1/20 dx
+  = INT from 0to20 of (x^2 - 20x + 100)/20 dx = INT from 0to20 of (X^2/20 - x + 5)dx
+  = (x^3/60 - x^2/2 + 5x) |0to20 = (20^3/60 - 20^2/2 + 5*20) - (0) = 33.333... mins^2
+  so O^2(sub x) = 33.333... mins^2 which is (20^2/12)
+O(sub x) = 5.77 mins
+
+(EX)
+Let X and Y be random variables. Then E[X +- Y] = E[X] +- E[Y]
+If X and Y are independent, V[X +- Y] = V[X] + V[Y]
+Suppose we have constants a and b, we random variables X and Y.
+E[aX +- bY] = a*E[X] +- bE[Y]
+If X and Y are independent V[aX +- bY] = a^2*V[X] + b^2V[Y]

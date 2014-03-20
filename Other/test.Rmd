@@ -1,0 +1,34 @@
+Title
+========================================================
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring web pages (click the **Help** toolbar button for more details on using R Markdown).
+
+When you click the **Knit HTML** button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r fig.width=7, fig.height=6}
+plot(cars)
+```
+
+site <- "http://www1.appstate.edu/~arnholta/PASWR/CD/data/Poplar3.CSV"
+poplar <- read.csv(file=site)
+head(poplar, n = 5)
+tail(poplar)
+str(poplar)
+summary(poplar)
+
+poplarC <- read.csv(file=url(site), na.strings="-99", colClasses=c(rep("factor",3),rep("numeric",3),"factor"))
+str(poplarC)
+summary(poplarC)
+poplarC$Height
+plot(poplarC$Height,poplarC$Weight)
+poplarC$Height[poplarC$Height > 8]
+poplarC$Height[1:10]
+dim(poplarC)
+
+?read.csv()
